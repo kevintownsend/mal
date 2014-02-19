@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <stdint.h>
 #include "r3.h"
+#include "tardis.h"
 
 using namespace std;
 
@@ -87,7 +88,9 @@ int main(int argc, char* argv[]){
             for(int j = 0; j < intermediateY.size(); j++){
                 yPtrs.push_back(&intermediateY[0] + j);
             }
+            stealTardis();
             sort(yPtrs.begin(), yPtrs.end(), compPtr);
+            returnTardis();
             //TODO: only largest 10
             int j = yPtrs.size() - 10;
             if(j < 0)
@@ -98,7 +101,15 @@ int main(int argc, char* argv[]){
             }
 
             spoonHeader* trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz);
+            stealTardis();
             runR3(trainSpoon, &xVector[0], &hardwareY[0]);
+            returnTardis();
+            for(int j = 0; i < intermediateY.size(); i++){
+                if(hardwareY[i] * 1.01 < intermediateY[i] || hardwareY[i] * .99 > intermediateY[i]){
+                    cerr << "Mismatch at: " << i << endl;
+                    break;
+                }
+            }
             break;
         }else{
             xVector[testJ[i]] = testV[i];
