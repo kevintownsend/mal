@@ -3,8 +3,7 @@ model = 20Newsgroups/model
 all : nativeBayes train.mtx
 
 nativeBayes : nativeBayes.cpp train.mtx
-	cnyCC -D_GLIBCXX -o nativeBayes nativeBayes.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
-	nativeBayes
+	cnyCC -D_GLIBCXX -I${HOME}/include -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o nativeBayes nativeBayes.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
 
 train.mtx : bowToMtxPy $(model)
 	bowToMtxPy
