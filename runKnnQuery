@@ -1,0 +1,2 @@
+#!/bin/bash
+rainbow -d 20Newsgroups/model --method=knn --knn-k=1 --knn-weighting=nnn.nnn --train-set=20Newsgroups/trainFilelist --query=20Newsgroups/20news-bydate-test/alt.atheism/53265

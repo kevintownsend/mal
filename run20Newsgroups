@@ -1,0 +1,26 @@
+#!/bin/bash
+if [ ! -e 20Newsgroups ]
+then
+    mkdir 20Newsgroups
+fi
+cd 20Newsgroups
+if [ ! -e 20news-bydate.tar.gz ]
+then
+    wget http://qwone.com/~jason/20Newsgroups/20news-bydate.tar.gz
+fi
+if [ ! -e 20news-bydate-train -o ! -e 20news-bydate-test ]
+then
+    tar -xzf 20news-bydate.tar.gz
+fi
+rm -rf model
+if [ "$1" = "small" ]
+then
+    rainbow -d ./model --index 20news-bydate-train/alt.atheism/ 20news-bydate-train/comp.graphics/ 20news-bydate-test/alt.atheism/ 20news-bydate-test/comp.graphics/
+else
+    rainbow -d ./model --index 20news-bydate-train/* 20news-bydate-test/*
+fi
+ls 20news-bydate-train/*/* > trainFilelist
+ls 20news-bydate-test/*/* > testFilelist
+rainbow -d ./model --test-set=testFilelist --test=1 > 20NewsResults
+rainbow-stats < 20NewsResults
+rainbow -d ./model --print-matrix > bowMatrix

@@ -1,0 +1,12 @@
+#!/bin/bash
+cd smallSet
+rm -rf model
+rainbow -d ./model --index train/* test/*
+ls train/*/* > trainFilelist
+ls test/*/* > testFilelist
+rainbow -d ./model --test-set=testFilelist --test=1 > smallResults
+rainbow-stats < smallResults
+rainbow -d ./model --print-matrix > bowMatrix
+rainbow -d ./model --method=knn --knn-k=2 --knn-weighting=nnn.nnn --test-set=testFilelist --test=1
+echo
+cat bowMatrix

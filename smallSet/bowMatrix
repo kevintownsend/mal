@@ -1,0 +1,4 @@
+train/a/one a  sells 0 1  seashells 1 1  seashore 2 1  
+train/b/two b  twinkle 3 2  star 4 1  
+test/a/three a  seashells 1 1  twinkle 3 1  sandy 5 1  shore 6 1  
+test/b/four b  star 4 3  bright 7 1  light 8 1  tonight 9 1  
