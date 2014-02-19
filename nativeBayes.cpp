@@ -59,15 +59,15 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < intermediateY.size(); i++){
         intermediateY[i] = 0;
     }
-    vector<double> hardwareY;
-    hardwareY.resize(trainN);
-    for(int i = 0; i < hardwareY.size(); i++){
+    double* hardwareY = (double*)cny_cp_malloc(sizeof(double) * trainN);
+    for(int i = 0; i < trainN; i++){
         hardwareY[i] = 0;
     }
     vector<double> xVector;
     xVector.resize(trainM);
     for(int i = 0; i < xVector.size(); i++){
         xVector[i] = 0;}
+    double* xVectorHardware = (double*)cny_cp_malloc(sizeof(double) * trainM);
     int currTestRow = 0;
     int tmp;
     cerr << "start" << endl;

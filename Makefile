@@ -11,12 +11,13 @@ train.mtx : bowToMtxPy $(model)
 	echo "train.mtx:"
 	head train.mtx
 
-small :
+small : smallSet/bowMatrix
 	bowToMtxPy smallSet
 	echo "train.mtx:"
 	head train.mtx
-	g++ -D_GLIBCXX -o nativeBayes nativeBayes.cpp
-	nativeBayes
+
+smallSet/bowMatrix :
+	runSmallSet
 
 clean :
 	rm -rf *.mtx 20Newsgroups/model log *.cls
@@ -29,3 +30,7 @@ cleanAll :
 
 $(model) : 
 	run20Newsgroups small
+
+convey :
+	scp linux-5.ece.iastate.edu:~/kNN/mal/nativeBayes .
+	nativeBayes
