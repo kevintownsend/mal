@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <stdint.h>
 #include <cassert>
+#include <map>
 #include "r3.h"
 #include "tardis.h"
 
@@ -148,6 +149,10 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < trainN; i++){
         xVectorHardware[i] = 0;
     }
+    int k = 30;
+    vector<int> kNNIndices;
+    for(int i = 0; i < k; i++)
+        kNNIndices.push_back(-1);
     markTime();
     for(int i = 0; i < testNnz; i++){
         if(testI[i] != currTestRow){
@@ -156,11 +161,23 @@ int main(int argc, char* argv[]){
 #ifndef TIME_CP
             cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
 
-            int maxPtr;
-            kSort(&hostY[0], hostY.size(), &maxPtr, 1);
+            kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
+            cerr << "largest: " << kNNIndices[0] << endl;
+            map<int, int> classificationCost;
+            for(int j = 0; j < k; j++){
+                if(kNNIndices[j] == -1)
+                    continue;
+                classificationCost[trainClass[kNNIndices[j]]] += hostY[kNNIndices[j]];
+            }
+            int maxClass = classificationCost.begin()->first;
+            for(map<int, int>::iterator it = classificationCost.begin(); it != classificationCost.end(); it++){
+            }
+            //for(
             for(; firstRowElement < i; firstRowElement++){
                 xVectorHardware[testJ[firstRowElement]] = 0;
             }
+            for(int j = 0; j < k; j++)
+                kNNIndices[j] = -1;
 #endif
 #ifdef DEBUG
             for(int j = 0; j < trainN; j++){
@@ -185,12 +202,24 @@ int main(int argc, char* argv[]){
 }
 
 void kSort(double* begin, int size, int* kNN, int k){
-    double* ptr;
-    double* max = begin;
-    
-    for(int i = 0; i < size; i++, ptr++){
-        if(*ptr > *max)
-            max = ptr;
+    if(k > size)
+        k = size;
+    for(int i = 0; i < size; i++){
+        if(kNN[k-1] == -1){
+        }else if(begin[i] < begin[kNN[k-1]])
+            continue;
+        bool largest = true;
+        for(int j = k - 2; j >= 0; j--){
+            if(kNN[j] == -1){
+            }else if(begin[i] > begin[kNN[j]]){
+                kNN[j+1] = kNN[j];
+            }else{
+                kNN[j + 1] = i;
+                largest = false;
+                break;
+            }
+        }
+        if(largest)
+            kNN[0] = i;
     }
-    kNN[0] = max - begin;
 }
