@@ -7,10 +7,13 @@
 #include <vector>
 #include <algorithm>
 #include <stdint.h>
+#include <cassert>
 #include "r3.h"
 #include "tardis.h"
 
 using namespace std;
+
+void kSort(double* begin, int size, int* kNN, int k);
 
 bool compPtr (double* i, double* j){
     return *i < *j;
@@ -78,6 +81,7 @@ int main(int argc, char* argv[]){
     int currTestRow = 0;
     int tmp;
     spoonHeader* trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz);
+#ifdef DEBUG
     cerr << "start" << endl;
     for(int i = 0; i < testNnz; i++){
         if(testI[i] != currTestRow){
@@ -130,11 +134,63 @@ int main(int argc, char* argv[]){
             xVector[testJ[i]] = testV[i];
         }
     }
+#endif
     cerr << "running hardware" << endl;
-    //TODO: pure hardware run
+    vector<double*> yPtrs;
+    for(int j = 0; j < intermediateY.size(); j++){
+        yPtrs.push_back(&hostY[0] + j);
+    }
+    stealTardis();
+    cny_cp_free(trainSpoon);
+    trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz);
+    currTestRow = 0;
+    int firstRowElement = 0;
+    for(int i = 0; i < trainN; i++){
+        xVectorHardware[i] = 0;
+    }
+    markTime();
+    for(int i = 0; i < testNnz; i++){
+        if(testI[i] != currTestRow){
+            runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
+            //TODO: software run
+#ifndef TIME_CP
+            cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
+
+            int maxPtr;
+            kSort(&hostY[0], hostY.size(), &maxPtr, 1);
+            for(; firstRowElement < i; firstRowElement++){
+                xVectorHardware[testJ[firstRowElement]] = 0;
+            }
+#endif
+#ifdef DEBUG
+            for(int j = 0; j < trainN; j++){
+                assert(xVectorHardware[j] == 0);
+            }
+#endif
+            currTestRow++;
+        }else{
+#ifndef TIME_CP
+            xVectorHardware[testJ[i]] = testV[i];
+#endif
+        }
+    }
+    //TODO: last row
+    runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
+    returnTardis();
+
     trainIn.close();
     testIn.close();
     trainClassIn.close();
-    //TODO: figure this out
     cerr << "finished" << endl;
+}
+
+void kSort(double* begin, int size, int* kNN, int k){
+    double* ptr;
+    double* max = begin;
+    
+    for(int i = 0; i < size; i++, ptr++){
+        if(*ptr > *max)
+            max = ptr;
+    }
+    kNN[0] = max - begin;
 }
