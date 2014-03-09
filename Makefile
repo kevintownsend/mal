@@ -4,7 +4,7 @@ all : mal train.mtx
 
 mal : mal.cpp train.mtx
 	#cnyCC -O3 -DTIME_CP -I${HOME}/include -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o nativeBayes nativeBayes.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
-	cnyCC -O3 -I${HOME}/include -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o mal mal.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
+	cnyCC -DENGINE=CNY -O3 -I${HOME}/include -I${HOME}/boost_1_55_0 -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o mal mal.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
 
 train.mtx : bowToMtxPy $(model)
 	bowToMtxPy
