@@ -1,1 +1,2 @@
 rainbow -d ./model/ --method=knn --test-set=testFileList --test=1
+rainbow -d ./model --print-matrix

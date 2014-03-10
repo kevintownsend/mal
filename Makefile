@@ -1,6 +1,6 @@
 model = 20Newsgroups/model
 
-all : mal train.mtx
+all : mal train.mtx spmvCoreCny.o
 
 mal : mal.cpp train.mtx
 	#cnyCC -O3 -DTIME_CP -I${HOME}/include -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o nativeBayes nativeBayes.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
@@ -34,3 +34,6 @@ $(model) :
 convey :
 	scp linux-5.ece.iastate.edu:~/kNN/mal/mal .
 	mal
+
+spmvCoreCny.o : spmvCoreCny.cpp spmvCore.h
+	cnyCC -O3 -lrt -c spmvCoreCny.cpp
