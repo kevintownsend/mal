@@ -9,7 +9,14 @@
 #include <stdint.h>
 #include <cassert>
 #include <map>
+#include <boost/numeric/ublas/vector.hpp>
+#if ENGINE == CNY
 #include "r3.h"
+#elif ENGINE == MKL
+
+#elif ENGINE == NONE
+
+#endif
 #include "tardis.h"
 
 using namespace std;
