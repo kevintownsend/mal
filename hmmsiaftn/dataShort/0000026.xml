@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rootTag>
+  <Award>
+    <AwardTitle>A Novel Ultrasonic Cooling Concept for Microelectrics</AwardTitle>
+    <AwardEffectiveDate>06/15/2000</AwardEffectiveDate>
+    <AwardExpirationDate>05/31/2004</AwardExpirationDate>
+    <AwardAmount>292026</AwardAmount>
+    <AwardInstrument>
+      <Value>Standard Grant</Value>
+    </AwardInstrument>
+    <Organization>
+      <Code>07010003</Code>
+      <Directorate>
+        <LongName>Directorate for Engineering</LongName>
+      </Directorate>
+      <Division>
+        <LongName>Division of Electrical, Communications and Cyber Systems</LongName>
+      </Division>
+    </Organization>
+    <ProgramOfficer>
+      <SignBlockName>Rajinder P. Khosla</SignBlockName>
+    </ProgramOfficer>
+    <AbstractNarration>The purpose of the proposed work is to design a novel cooling device for microelectronic systems using ultrasonic flexural waves (UFW's) of a resonating structure. The ultrasonic nature affords two essential features of such a device: Efficient cooling that derives from a high rate of acoustic streaming of air that causes convective heat transfer away from a heat source near the resonating structure and noise-free operation which is recognized as an important consumer benefit. To achieve this, three objectives are sought. First, the design of a chip-size cooling mechanism and on-chip assembly that will ensure optimum cooling capability will be investigated. Second, a heat transfer analysis of UFW-based acoustic streaming will be carried out with a goal of accurately predicting the cooling performance of such a device. Thirdly, based on the heat transfer analysis, a prototype design will be undertaken utilizing thin-film MEMS technology for power efficiency and economic viability. Final testing and evaluation will be carried out using specifications and procedures typically employed for computer processors.</AbstractNarration>
+    <MinAmdLetterDate>07/14/2000</MinAmdLetterDate>
+    <MaxAmdLetterDate>01/31/2003</MaxAmdLetterDate>
+    <ARRAAmount/>
+    <AwardID>0000026</AwardID>
+    <Investigator>
+      <FirstName>Paul</FirstName>
+      <LastName>Ro</LastName>
+      <EmailAddress>paul_ro@ncsu.edu</EmailAddress>
+      <StartDate>07/14/2000</StartDate>
+      <EndDate/>
+      <RoleCode>Principal Investigator</RoleCode>
+    </Investigator>
+    <Investigator>
+      <FirstName>Andrey</FirstName>
+      <LastName>Kuznetsov</LastName>
+      <EmailAddress>avkuznet@eos.ncsu.edu</EmailAddress>
+      <StartDate>07/14/2000</StartDate>
+      <EndDate/>
+      <RoleCode>Co-Principal Investigator</RoleCode>
+    </Investigator>
+    <Investigator>
+      <FirstName>Angus</FirstName>
+      <LastName>Kingon</LastName>
+      <EmailAddress>angus@brown.edu</EmailAddress>
+      <StartDate>07/14/2000</StartDate>
+      <EndDate/>
+      <RoleCode>Co-Principal Investigator</RoleCode>
+    </Investigator>
+    <Institution>
+      <Name>North Carolina State University</Name>
+      <CityName>RALEIGH</CityName>
+      <ZipCode>276957514</ZipCode>
+      <PhoneNumber>9195152444</PhoneNumber>
+      <StreetAddress>CAMPUS BOX 7514</StreetAddress>
+      <CountryName>United States</CountryName>
+      <StateName>North Carolina</StateName>
+      <StateCode>NC</StateCode>
+    </Institution>
+    <FoaInformation>
+      <Code>0206000</Code>
+      <Name>Telecommunications</Name>
+    </FoaInformation>
+    <ProgramElement>
+      <Code>1517</Code>
+      <Text>ELECT, PHOTONICS, &amp; MAG DEVICE</Text>
+    </ProgramElement>
+    <ProgramElement>
+      <Code>5979</Code>
+      <Text>CENTRAL &amp; EASTERN EUROPE PROGR</Text>
+    </ProgramElement>
+    <ProgramElement>
+      <Code>5980</Code>
+      <Text>WESTERN EUROPE PROGRAM</Text>
+    </ProgramElement>
+    <ProgramReference>
+      <Code>0000</Code>
+      <Text>UNASSIGNED</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>5914</Code>
+      <Text>WESTERN EUROPE, OTHER</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>5998</Code>
+      <Text>UKRAINE</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>9251</Code>
+      <Text>RES EXPER FOR UNDERGRAD-SUPPLT</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>OTHR</Code>
+      <Text>OTHER RESEARCH OR EDUCATION</Text>
+    </ProgramReference>
+  </Award>
+</rootTag>

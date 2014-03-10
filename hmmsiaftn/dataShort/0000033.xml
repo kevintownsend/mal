@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rootTag>
+  <Award>
+    <AwardTitle>Integrated study of source, path, and site effects on Kocaeli, Turkey, earthquake ground motions</AwardTitle>
+    <AwardEffectiveDate>10/01/2001</AwardEffectiveDate>
+    <AwardExpirationDate>03/31/2005</AwardExpirationDate>
+    <AwardAmount>84000</AwardAmount>
+    <AwardInstrument>
+      <Value>Standard Grant</Value>
+    </AwardInstrument>
+    <Organization>
+      <Code>07030000</Code>
+      <Directorate>
+        <LongName>Directorate for Engineering</LongName>
+      </Directorate>
+      <Division>
+        <LongName>Division of Civil, Mechanical, and Manufacturing Innovation</LongName>
+      </Division>
+    </Organization>
+    <ProgramOfficer>
+      <SignBlockName>Richard J. Fragaszy</SignBlockName>
+    </ProgramOfficer>
+    <AbstractNarration>The Kocaeli, Turkey, earthquake (M=7.4) of 17 August 1999 was particularly destructive because the fault ruptured in a densely developed urban area. This project is for an integrated study of the factors that controlled the nature of the ground motions: the earthquake source, wave propagation along the path, and near-surface modifications of these motions at the recording sites.&lt;br/&gt;&lt;br/&gt;The ground motions may be analogous to motions from earthquakes of this magnitude on strike-slip faults in the United States; in particular for the San Francisco Bay area and the Greater Los Angeles region. One critical result of the study will be calibration of parameters of the composite source model for a strike-slip earthquake with slip comparable to an earthquake on the San Andreas fault.</AbstractNarration>
+    <MinAmdLetterDate>09/21/2001</MinAmdLetterDate>
+    <MaxAmdLetterDate>09/22/2004</MaxAmdLetterDate>
+    <ARRAAmount/>
+    <AwardID>0000033</AwardID>
+    <Investigator>
+      <FirstName>John</FirstName>
+      <LastName>Anderson</LastName>
+      <EmailAddress>jga@unr.edu</EmailAddress>
+      <StartDate>09/21/2001</StartDate>
+      <EndDate/>
+      <RoleCode>Co-Principal Investigator</RoleCode>
+    </Investigator>
+    <Investigator>
+      <FirstName>Yuehua</FirstName>
+      <LastName>Zeng</LastName>
+      <EmailAddress>zeng@seismo.unr.edu</EmailAddress>
+      <StartDate>09/21/2001</StartDate>
+      <EndDate/>
+      <RoleCode>Principal Investigator</RoleCode>
+    </Investigator>
+    <Investigator>
+      <FirstName>Feng</FirstName>
+      <LastName>Su</LastName>
+      <EmailAddress>feng@seismo.unr.edu</EmailAddress>
+      <StartDate>09/21/2001</StartDate>
+      <EndDate/>
+      <RoleCode>Co-Principal Investigator</RoleCode>
+    </Investigator>
+    <Institution>
+      <Name>Board of Regents, NSHE, obo University of Nevada, Reno</Name>
+      <CityName>Reno</CityName>
+      <ZipCode>895570325</ZipCode>
+      <PhoneNumber>7757844040</PhoneNumber>
+      <StreetAddress>1664 North Virginia Street</StreetAddress>
+      <CountryName>United States</CountryName>
+      <StateName>Nevada</StateName>
+      <StateCode>NV</StateCode>
+    </Institution>
+    <FoaInformation>
+      <Code>0304000</Code>
+      <Name>Disaster &amp; Natural Hazard</Name>
+    </FoaInformation>
+    <ProgramElement>
+      <Code>1636</Code>
+      <Text>GEOTECHNICAL ENGINEERING</Text>
+    </ProgramElement>
+    <ProgramReference>
+      <Code>1039</Code>
+      <Text>RENEWAL ENGINEERING</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>1576</Code>
+      <Text>NATIONL EARTHQK HZRD REDCT PRG</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>CVIS</Code>
+      <Text>CIVIL INFRASTRUCTURE</Text>
+    </ProgramReference>
+  </Award>
+</rootTag>

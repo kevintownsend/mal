@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rootTag>
+  <Award>
+    <AwardTitle>Ship Operations Support - CY 2000</AwardTitle>
+    <AwardEffectiveDate>01/01/2000</AwardEffectiveDate>
+    <AwardExpirationDate>07/31/2003</AwardExpirationDate>
+    <AwardAmount>133984</AwardAmount>
+    <AwardInstrument>
+      <Value>Cooperative Agreement</Value>
+    </AwardInstrument>
+    <Organization>
+      <Code>06040100</Code>
+      <Directorate>
+        <LongName>Directorate for Geosciences</LongName>
+      </Directorate>
+      <Division>
+        <LongName>Division of Ocean Sciences</LongName>
+      </Division>
+    </Organization>
+    <ProgramOfficer>
+      <SignBlockName>Linda Goad</SignBlockName>
+    </ProgramOfficer>
+    <AbstractNarration>0000070&lt;br/&gt;Barnes&lt;br/&gt;&lt;br/&gt;The Smithsonian Tropical Research Institute (STRI) will operate the R/V Urraca during 2000 as a general oceanographic research vessel in support of NSF-supported research projects. The Urraca is a 96 ft. vessel, constructed in 1986 and refitted in 1996, and is owned and operated by the Smithsonian Institution. The vessel is scheduled for a total of 114 operational days during 2000, of which 15 days are in support of NSF-supported investigators. The remaining cruises will support Smithsonian and other agency projects. Preventative maintenance will take place in the month of June. The projects scheduled on the Urraca include several oceanographic disciplines and will fully utilize the capabilities of the vessel. Operations will take place regionally off both coasts of Panama.&lt;br/&gt;&lt;br/&gt;The Urraca is part of a fleet of ships used by the National Science Foundation in support of marine science research. Most oceanographic projects require highly specialized equipment to be permanently installed on the vessel, thus the necessity for specialized ships. These vessels do not operate in the same mode as general cargo/fishing vessels. As a result, NSF supports the operation of a variety of ships specifically dedicated to oceanographic research that are operated by universities and institutions around the country.&lt;br/&gt;***</AbstractNarration>
+    <MinAmdLetterDate>01/07/2000</MinAmdLetterDate>
+    <MaxAmdLetterDate>04/09/2003</MaxAmdLetterDate>
+    <ARRAAmount/>
+    <AwardID>0000070</AwardID>
+    <Investigator>
+      <FirstName>Pierre</FirstName>
+      <LastName>Jacinto-Fuentes</LastName>
+      <EmailAddress>fuentesp@naos.si.edu</EmailAddress>
+      <StartDate>04/05/2001</StartDate>
+      <EndDate/>
+      <RoleCode>Principal Investigator</RoleCode>
+    </Investigator>
+    <Investigator>
+      <FirstName>Howard</FirstName>
+      <LastName>Barnes</LastName>
+      <EmailAddress>barnesh@tivoli.si.edu</EmailAddress>
+      <StartDate>01/07/2000</StartDate>
+      <EndDate/>
+      <RoleCode>Co-Principal Investigator</RoleCode>
+    </Investigator>
+    <Institution>
+      <Name>Smithsonian Institution</Name>
+      <CityName>Arlington</CityName>
+      <ZipCode>222023709</ZipCode>
+      <PhoneNumber>2026337110</PhoneNumber>
+      <StreetAddress>Office of Sponsored Projects</StreetAddress>
+      <CountryName>United States</CountryName>
+      <StateName>Virginia</StateName>
+      <StateCode>VA</StateCode>
+    </Institution>
+    <FoaInformation>
+      <Code>0204000</Code>
+      <Name>Oceanography</Name>
+    </FoaInformation>
+    <ProgramElement>
+      <Code>5411</Code>
+      <Text>SHIP OPERATIONS</Text>
+    </ProgramElement>
+    <ProgramReference>
+      <Code>0000</Code>
+      <Text>UNASSIGNED</Text>
+    </ProgramReference>
+    <ProgramReference>
+      <Code>OTHR</Code>
+      <Text>OTHER RESEARCH OR EDUCATION</Text>
+    </ProgramReference>
+  </Award>
+</rootTag>
