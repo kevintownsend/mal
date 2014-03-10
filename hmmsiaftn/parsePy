@@ -1,0 +1,21 @@
+#!/usr/bin/python3
+import xml.etree.ElementTree as ET
+from sys import *
+if(len(argv) != 2):
+    print("Usage: you didn't use it right")
+    exit(1)
+tree = ET.parse(argv[1])
+root = tree.getroot()
+fMoney = open("money", 'a')
+name = argv[1].strip().rstrip(".xml")
+for child in root:
+    if(child.tag != "Award"):
+        print("ERROR:")
+    else:
+        for child2 in child:
+            if(child2.tag == "AwardTitle"):
+                print(child2.text)
+            elif(child2.tag == "AwardAmount"):
+                fMoney.write(name.split("/")[1] + ":" + child2.text + "\n")
+            elif(child2.tag == "AbstractNarration"):
+                print(child2.text)
