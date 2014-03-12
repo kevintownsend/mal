@@ -1,10 +1,13 @@
 model = 20Newsgroups/model
 
-all : mal train.mtx spmvCoreCny.o
+all : mal train.mtx spmvCoreCny.o naiveMal
 
-mal : mal.cpp train.mtx
+mal : mal.cpp train.mtx spmvCoreCny.o
 	#cnyCC -O3 -DTIME_CP -I${HOME}/include -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o nativeBayes nativeBayes.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
-	cnyCC -DENGINE=CNY -O3 -I${HOME}/include -I${HOME}/boost_1_55_0 -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o mal mal.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
+	cnyCC -O3 -lrt ${HOME}/tardis/tardis.o -o mal mal.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o spmvCoreCny.o
+
+naiveMal : mal.cpp spmvCoreNaive.o
+	g++ -O3 -lrt -o naiveMal mal.cpp spmvCoreNaive.o ${HOME}/tardis/tardis.o
 
 train.mtx : bowToMtxPy $(model)
 	bowToMtxPy
@@ -37,3 +40,6 @@ convey :
 
 spmvCoreCny.o : spmvCoreCny.cpp spmvCore.h
 	cnyCC -O3 -lrt -c spmvCoreCny.cpp
+
+spmvCoreNaive.o : spmvCoreNaive.cpp spmvCore.h
+	g++ -O3 -c spmvCoreNaive.cpp
