@@ -7,7 +7,7 @@ mal : mal.cpp train.mtx spmvCoreCny.o
 	cnyCC -O3 -lrt ${HOME}/tardis/tardis.o -o mal mal.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o spmvCoreCny.o
 
 naiveMal : mal.cpp spmvCoreNaive.o
-	g++ -O3 -lrt -o naiveMal mal.cpp spmvCoreNaive.o ${HOME}/tardis/tardis.o
+	g++ -std=gnu++0x -O3 -lrt -o naiveMal mal.cpp spmvCoreNaive.o ${HOME}/tardis/tardis.o
 
 train.mtx : bowToMtxPy $(model)
 	bowToMtxPy
@@ -42,4 +42,4 @@ spmvCoreCny.o : spmvCoreCny.cpp spmvCore.h
 	cnyCC -O3 -lrt -c spmvCoreCny.cpp
 
 spmvCoreNaive.o : spmvCoreNaive.cpp spmvCore.h
-	g++ -O3 -c spmvCoreNaive.cpp
+	g++ -std=gnu++0x -O3 -c spmvCoreNaive.cpp

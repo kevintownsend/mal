@@ -53,8 +53,19 @@ int main(int argc, char* argv[]){
         trainClassIn >> tmpI0 >> tmpS;
         trainClass.push_back(tmpI0);
     }
-
     vector<vector<pair<int, double> > > knnResults = findNearestNeihbors(trainM, trainN, trainNnz, trainI, trainJ, trainV, testN, testM, testNnz, testI, testJ, testV);
+    if(testM <= 20){
+        for(int i = 0; i < knnResults.size(); i++){
+            map<int, double> totals;
+            for(int j = 0; j < knnResults[i].size(); j++){
+                totals[knnResults[i][j].first] += knnResults[i][j].second;
+            }
+            cout << "Results:" << endl;
+            for(map<int, double>::iterator it = totals.begin(); it != totals.end(); it++){
+                cout << it->first << ":" << it->second << endl;
+            }
+        }
+    }
 
     trainIn.close();
     testIn.close();

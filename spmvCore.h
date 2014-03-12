@@ -2,8 +2,7 @@
 #include <vector>
 #include <utility>
 
-using namespace std;
-vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, int trainNnz, vector<int> &trainI, vector<int> &trainJ, vector<double> &trainV, int testN, int testM, int testNnz, vector<int> &testI, vector<int> &testJ, vector<double> &testV);
+std::vector< std::vector< std::pair<int, double> > > findNearestNeihbors(int trainM, int trainN, int trainNnz, std::vector<int> &trainI, std::vector<int> &trainJ, std::vector<double> &trainV, int testN, int testM, int testNnz, std::vector<int> &testI, std::vector<int> &testJ, std::vector<double> &testV);
 
 /*
 #if ENGINE == MKL
