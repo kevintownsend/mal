@@ -54,6 +54,7 @@ int main(int argc, char* argv[]){
         trainClass.push_back(tmpI0);
     }
     vector<vector<pair<int, double> > > knnResults = findNearestNeihbors(trainM, trainN, trainNnz, trainI, trainJ, trainV, testN, testM, testNnz, testI, testJ, testV);
+    cerr << "after knn" << endl;
     if(testM <= 20){
         for(int i = 0; i < knnResults.size(); i++){
             map<int, double> totals;

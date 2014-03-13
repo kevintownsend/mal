@@ -7,4 +7,4 @@ export CNY_SIM_THREAD=libcpSimLib2.so
 export CNY_CAE_EMULATOR=$HOME/R3-0.0.0/sim/CaeSimPers
 export CNY_CALL_STATS=1
 
-mal
+malCny

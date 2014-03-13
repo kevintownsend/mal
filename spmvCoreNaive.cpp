@@ -31,16 +31,10 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         k = trainM;
     vector<vector<pair<int, double> > > ret;
     ret.resize(testM);
-    vector<double> distance;
     vector<double> intermediateY;
     intermediateY.resize(trainM);
     for(int i = 0; i < intermediateY.size(); i++){
         intermediateY[i] = 0;
-    }
-    vector<double> hostY;
-    hostY.resize(trainM);
-    for(int i = 0; i < hostY.size(); i++){
-        hostY[i] = 0;
     }
     vector<double> xVector;
     xVector.resize(trainN);
@@ -54,6 +48,9 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     for(int i = 0; i < testNnz; i++){
         if(testI[i] != currTestRow){
             high_resolution_clock::time_point before = high_resolution_clock::now();
+            for(int j = 0; j < intermediateY.size(); j++){
+                intermediateY[j] = 0;
+            }
             for(int j = 0; j < trainNnz; j++){
                 intermediateY[trainI[j]] += trainV[j] * xVector[trainJ[j]];
             }
@@ -70,16 +67,15 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
                 assert(xVector[j] == 0);
             }
 #endif
-            for(int j = 0; j < intermediateY.size(); j++){
-                intermediateY[j] = 0;
-            }
             for(int j = 0; j < k; j++)
                 kNNIndices[j] = -1;
             currTestRow = testI[i];
         }
         xVector[testJ[i]] = testV[i];
     }
-    //TODO: last row
+    for(int j = 0; j < intermediateY.size(); j++){
+        intermediateY[j] = 0;
+    }
     for(int j = 0; j < trainNnz; j++){
         intermediateY[trainI[j]] += trainV[j] * xVector[trainJ[j]];
     }

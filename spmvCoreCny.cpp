@@ -11,11 +11,12 @@
 #include <stdint.h>
 #include <cassert>
 #include <map>
-#include <boost/numeric/ublas/vector.hpp>
+#include <boost/chrono/include.hpp>
+#include <boost/chrono.hpp>
 #include "r3.h"
-#include "tardis.h"
 
 using namespace std;
+using namespace boost::chrono;
 
 void kSort(double* begin, int size, int* kNN, int k);
 
@@ -24,13 +25,13 @@ bool compPtr (double* i, double* j){
 }
 
 vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, int trainNnz, vector<int> &trainI, vector<int> &trainJ, vector<double> &trainV, int testN, int testM, int testNnz, vector<int> &testI, vector<int> &testJ, vector<double> &testV){
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    double spmvTime = 0;
+    int k = 30;
+    if(trainM < k)
+        k = trainM;
     vector<vector<pair<int, double> > > ret;
-    vector<double> distance;
     vector<double> intermediateY;
-    intermediateY.resize(trainM);
-    for(int i = 0; i < intermediateY.size(); i++){
-        intermediateY[i] = 0;
-    }
     double* hardwareY = (double*)cny_cp_malloc(sizeof(double) * trainM);
     for(int i = 0; i < trainM; i++){
         hardwareY[i] = 0;
@@ -40,41 +41,26 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     for(int i = 0; i < hostY.size(); i++){
         hostY[i] = 0;
     }
-    vector<double> xVector;
-    xVector.resize(trainN);
-    for(int i = 0; i < xVector.size(); i++){
-        xVector[i] = 0;}
     double* xVectorHardware = (double*)cny_cp_malloc(sizeof(double) * trainN);
     int currTestRow = 0;
-    int tmp;
     spoonHeader* trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz);
-    cerr << "running hardware" << endl;
-    vector<double*> yPtrs;
-    for(int j = 0; j < intermediateY.size(); j++){
-        yPtrs.push_back(&hostY[0] + j);
-    }
-    stealTardis();
-    cny_cp_free(trainSpoon);
-    trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz);
     currTestRow = 0;
     int firstRowElement = 0;
     for(int i = 0; i < trainN; i++){
         xVectorHardware[i] = 0;
     }
-    int k = 30;
     vector<int> kNNIndices;
     for(int i = 0; i < k; i++)
         kNNIndices.push_back(-1);
-    markTime();
     for(int i = 0; i < testNnz; i++){
         if(testI[i] != currTestRow){
             runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
-            //TODO: software run
             cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
 
             kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
-            cerr << "largest: " << kNNIndices[0] << endl;
-            //for(
+            for(int j = 0; j < k; j++){
+                ret[currTestRow].push_back(make_pair(kNNIndices[j],intermediateY[kNNIndices[j]]));
+            }
             for(; firstRowElement < i; firstRowElement++){
                 xVectorHardware[testJ[firstRowElement]] = 0;
             }
@@ -86,14 +72,20 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
             }
 #endif
             currTestRow++;
-        }else{
-            xVectorHardware[testJ[i]] = testV[i];
         }
+        xVectorHardware[testJ[i]] = testV[i];
     }
-    //TODO: last row
     runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
-    //TODO: complete
-    returnTardis();
+    cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
+
+    kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
+    for(int j = 0; j < k; j++){
+        ret[currTestRow].push_back(make_pair(kNNIndices[j],intermediateY[kNNIndices[j]]));
+    }
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double> >(t2 - t1);
+    cerr << "Classification took: " << time_span.count() << " seconds." << endl;
+    cerr << "SpMV took: " << spmvTime << " seconds." << endl;
     return ret;
 }
 
