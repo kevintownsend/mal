@@ -25,13 +25,17 @@ bool compPtr (double* i, double* j){
 }
 
 vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, int trainNnz, vector<int> &trainI, vector<int> &trainJ, vector<double> &trainV, int testN, int testM, int testNnz, vector<int> &testI, vector<int> &testJ, vector<double> &testV){
+    cerr << "nn call" << endl;
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     double spmvTime = 0;
+    double sorting = 0;
+    double coprocToHost = 0;
+    double hostToCoproc = 0;
     int k = 30;
     if(trainM < k)
         k = trainM;
     vector<vector<pair<int, double> > > ret;
-    vector<double> intermediateY;
+    ret.resize(testM);
     double* hardwareY = (double*)cny_cp_malloc(sizeof(double) * trainM);
     for(int i = 0; i < trainM; i++){
         hardwareY[i] = 0;
@@ -52,14 +56,27 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     vector<int> kNNIndices;
     for(int i = 0; i < k; i++)
         kNNIndices.push_back(-1);
+
+    high_resolution_clock::time_point t3 = high_resolution_clock::now();
+    high_resolution_clock::time_point timePoint = high_resolution_clock::now();
     for(int i = 0; i < testNnz; i++){
         if(testI[i] != currTestRow){
+            hostToCoproc += duration_cast<duration<double> >(timePoint - high_resolution_clock::now()).count();
+            high_resolution_clock::time_point before = high_resolution_clock::now();
             runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
+            high_resolution_clock::time_point after = high_resolution_clock::now();
+            spmvTime += duration_cast<duration<double> >(after-before).count();
+            before = high_resolution_clock::now();
             cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
+            after = high_resolution_clock::now();
+            coprocToHost += duration_cast<duration<double> >(after-before).count();
 
+            before = high_resolution_clock::now();
             kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
+            after = high_resolution_clock::now();
+            sorting += duration_cast<duration<double> >(after-before).count();
             for(int j = 0; j < k; j++){
-                ret[currTestRow].push_back(make_pair(kNNIndices[j],intermediateY[kNNIndices[j]]));
+                ret[currTestRow].push_back(make_pair(kNNIndices[j],hostY[kNNIndices[j]]));
             }
             for(; firstRowElement < i; firstRowElement++){
                 xVectorHardware[testJ[firstRowElement]] = 0;
@@ -72,6 +89,7 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
             }
 #endif
             currTestRow++;
+            timePoint = high_resolution_clock::now();
         }
         xVectorHardware[testJ[i]] = testV[i];
     }
@@ -80,12 +98,16 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
 
     kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
     for(int j = 0; j < k; j++){
-        ret[currTestRow].push_back(make_pair(kNNIndices[j],intermediateY[kNNIndices[j]]));
+        ret[currTestRow].push_back(make_pair(kNNIndices[j],hostY[kNNIndices[j]]));
     }
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double> >(t2 - t1);
     cerr << "Classification took: " << time_span.count() << " seconds." << endl;
+    cerr << "it took: " << (duration_cast<duration<double> >(t2-t3)).count() << " seconds." << endl;
     cerr << "SpMV took: " << spmvTime << " seconds." << endl;
+    cerr << "sorting took: " << sorting << " seconds." << endl;
+    cerr << "coprocToHost took: " << coprocToHost << " seconds." << endl;
+    cerr << "hostToCoproc took: " << hostToCoproc << " seconds." << endl;
     return ret;
 }
 

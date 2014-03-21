@@ -1,6 +1,6 @@
 model = 20Newsgroups/model
 
-all : malCny train.mtx spmvCoreCny.o naiveMal spmvCoreMkl.o mklMal
+all : malCny train.mtx spmvCoreCny.o naiveMal spmvCoreMkl.o mklMal spmvCoreParallel.o malParallel
 
 malCny : mal.cpp train.mtx spmvCoreCny.o
 	#cnyCC -O3 -DTIME_CP -I${HOME}/include -lrt -L${HOME}/lib -ltardis ${HOME}/tardis/tardis.o -o nativeBayes nativeBayes.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/cpSMVM.s ${HOME}/misc/mmio.o
@@ -44,8 +44,14 @@ spmvCoreCny.o : spmvCoreCny.cpp spmvCore.h
 spmvCoreNaive.o : spmvCoreNaive.cpp spmvCore.h
 	g++ -std=gnu++0x -O3 -c spmvCoreNaive.cpp
 
+spmvCoreParallel.o : spmvCoreNaive.cpp spmvCore.h
+	g++ -std=gnu++0x -DPARALLEL -O3 -o spmvCoreParallel.o -c spmvCoreNaive.cpp
+
+malParallel : spmvCoreParallel.o mal.cpp
+	g++ -std=gnu++0x -pthread -o malParallel mal.cpp spmvCoreParallel.o
+
 spmvCoreMkl.o : spmvCoreMkl.cpp spmvCore.h
-	icpc -std=gnu++0x -O3 -c spmvCoreMkl.cpp
+	icpc -std=gnu++0x -mkl=parallel -O3 -c spmvCoreMkl.cpp
 
 mklMal : mal.cpp spmvCoreMkl.o
 	icpc -std=gnu++0x -O3 -mkl=parallel -o mklMal mal.cpp spmvCoreMkl.o
