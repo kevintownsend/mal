@@ -7,7 +7,7 @@ then
         short=true
     fi
 fi
-if [ ! -d data ]
+if [ ! -d data -a ! short ]
 then
     mkdir data
     zipFiles=$(ls ${HOME}/KT/data/nsfAbstracts/*)
@@ -23,7 +23,7 @@ then
     then
         mkdir bowFilesShort
     fi
-    rm -rf moneyShort
+    rm -rf moneyShort money
     xmlFiles=$(ls dataShort/*)
     for f in $xmlFiles
     do
@@ -56,7 +56,11 @@ else
         fi
         newF=${f%.xml}
         newF=${newF#data}
-        parsePy $f > bowFiles/$newF
+        if [ ! -d bowFiles/${newF:0:3} ]
+        then
+            mkdir bowFiles/${newF:0:3}
+        fi
+        parsePy $f > bowFiles/${newF:0:3}/$newF
         eval i=$i+1
     done
 fi
@@ -67,5 +71,7 @@ then
     rainbow -d ./model --print-matrix > bowMatrix
     bowToMtxPy
 else
-    :
+    rainbow -d ./model --index bowFiles/*
+    rainbow -d ./model --print-matrix > bowMatrix
+    bowToMtxPy
 fi
