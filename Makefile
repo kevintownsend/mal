@@ -35,8 +35,8 @@ $(model) :
 	run20Newsgroups small
 
 convey :
-	scp linux-5.ece.iastate.edu:~/kNN/mal/mal .
-	mal
+	scp linux-5.ece.iastate.edu:~/kNN/mal/malCny .
+	malCny
 
 spmvCoreCny.o : spmvCoreCny.cpp spmvCore.h
 	cnyCC -O3 -lrt -c spmvCoreCny.cpp
