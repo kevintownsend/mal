@@ -1,24 +1,29 @@
 #!/bin/bash
-short=false
+short=0
 if [ $# == 1 ]
 then
     if [ $1 == short ]
     then
-        short=true
+        short=1
     fi
 fi
-if [ ! -d data -a ! short ]
+echo $short
+if [ $short == 0 ]
 then
-    mkdir data
-    zipFiles=$(ls ${HOME}/KT/data/nsfAbstracts/*)
-    for f in $zipFiles
-    do
-        unzip $f -d data/.
-    done
+    if [ ! -d data ]
+    then
+        mkdir data
+        zipFiles=$(ls ${HOME}/data/nsfAbstracts/*)
+        for f in $zipFiles
+        do
+            unzip $f -d data/.
+        done
+    fi
 fi
 i=0
-if [ short ]
+if [ $short == 1 ]
 then
+    echo "why true?"
     if [ ! -d bowFilesShort ]
     then
         mkdir bowFilesShort
@@ -42,30 +47,42 @@ then
     done
     mv money moneyShort
 else
+    echo "Making bowFiles"
     if [ ! -d bowFiles ]
     then
         mkdir bowFiles
     fi
-    rm money
-    xmlFiles=$(ls data/*)
-    for f in $xmlFiles
+    rm -rf money
+#todo fix break
+    year=76
+    while [ $year -ne 15 ]
     do
-        if [ $i == 5 ]
-        then
-            break
-        fi
-        newF=${f%.xml}
-        newF=${newF#data}
-        if [ ! -d bowFiles/${newF:0:3} ]
-        then
-            mkdir bowFiles/${newF:0:3}
-        fi
-        parsePy $f > bowFiles/${newF:0:3}/$newF
+        xmlFiles=$(ls data/${year}*)
+        for f in $xmlFiles
+        do
+#        if [ $i == 5 ]
+#        then
+#            break
+#        fi
+            newF=${f%.xml}
+            newF=${newF#data}
+            if [ ! -d bowFiles/${newF:0:3} ]
+            then
+                mkdir bowFiles/${newF:0:3}
+            fi
+            parsePy $f > bowFiles/${newF:0:3}/$newF
+        done
         eval i=$i+1
+        let year=year+1
+        year=`printf %02d $year`
+        if [ $year -eq 100 ]
+        then
+            year=00
+        fi
     done
 fi
 
-if [ short ]
+if [ $short == 1 ]
 then
     rainbow -d ./model --index bowFilesShort/*
     rainbow -d ./model --print-matrix > bowMatrix
