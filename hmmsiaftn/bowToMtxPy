@@ -17,18 +17,21 @@ test = [[],[],[]]
 classes = {}
 trainClasses = []
 for l in fin:
+    print("ERROR: " + l)
     line = l.split()
+
     if(line[0].find("train") != -1 or True):
         if(not line[1] in classes.keys()):
             classes[line[1]] = len(classes)
         trainClasses.append(line[1])
         del line[0]
-        del line[1]
-        for j in range(len(line)//3):
-            train[0].append(trainCount)
-            train[1].append(int(line[1 + j * 3]))
-            train[2].append(int(line[2 + j * 3]))
-            trainMatrixSize = trainMatrixSize + 1
+        if(not (len(line) < 2)):
+            del line[1]
+            for j in range(len(line)//3):
+                train[0].append(trainCount)
+                train[1].append(int(line[1 + j * 3]))
+                train[2].append(int(line[2 + j * 3]))
+                trainMatrixSize = trainMatrixSize + 1
         trainCount = trainCount + 1
     elif(line[0].find("test") != -1):
         del line[0]

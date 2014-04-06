@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/bin/env python3
 from sys import *
 from string import *
 
@@ -17,6 +17,7 @@ test = [[],[],[]]
 classes = {}
 trainClasses = []
 for l in fin:
+    #print("ERROR: " + l);
     line = l.split()
     if(line[0].find("train") != -1):
         if(not line[1] in classes.keys()):
