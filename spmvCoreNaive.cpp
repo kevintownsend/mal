@@ -106,13 +106,25 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         }
         xVector[testJ[i]] = testV[i];
     }
+    high_resolution_clock::time_point before = high_resolution_clock::now();
     for(int j = 0; j < intermediateY.size(); j++){
         intermediateY[j] = 0;
     }
+#ifdef PARALLEL
+    cerr << "before parallel call" << endl;
+    spmvParallel(trainI, trainJ, trainV, intermediateY, xVector);
+    cerr << "after parallel call" << endl;
+#else
     for(int j = 0; j < trainNnz; j++){
         intermediateY[trainI[j]] += trainV[j] * xVector[trainJ[j]];
     }
+#endif
+    high_resolution_clock::time_point after = high_resolution_clock::now();
+    spmvTime += duration_cast<duration<double> >(after-before).count();
+    before = high_resolution_clock::now();
     kSort(&intermediateY[0], intermediateY.size(), &kNNIndices[0], k);
+    after = high_resolution_clock::now();
+    sorting += duration_cast<duration<double> >(after-before).count();
     for(int j = 0; j < k; j++){
         ret[currTestRow].push_back(make_pair(kNNIndices[j],intermediateY[kNNIndices[j]]));
     }
