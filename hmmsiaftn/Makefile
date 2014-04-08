@@ -11,8 +11,8 @@ classifierService : classifierService.cpp ../mal.o
 mal.o : mal.cpp
 	cnyCC -I${HOME}/include -c mal.cpp
 
-query : query.cpp
-	g++ -O3 -o query query.cpp
+query : query.cpp ../spmvCoreNaive.o
+	g++ -I../. -O3 -o query query.cpp ../spmvCoreNaive.o
 	query
 
 clean :

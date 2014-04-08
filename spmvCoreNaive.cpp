@@ -71,7 +71,7 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
             assert(checkY.size() != 0);
             for(int j = 0; j < checkY.size(); j++){
                 if(checkY[j] != intermediateY[j]){
-                    cerr << "shit at " << i << "," << j << endl;
+                    cerr << "ERROR: " << endl;
                     cerr << "check: " << checkY[j] << endl;
                     cerr << "intermediateY: " << intermediateY[j] << endl;
                 }
