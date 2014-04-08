@@ -10,7 +10,7 @@ fi
 if [ ! -d data -a ! short ]
 then
     mkdir data
-    zipFiles=$(ls ${HOME}/KT/data/nsfAbstracts/*)
+    zipFiles=$(ls ${HOME}/data/nsfAbstracts/*)
     for f in $zipFiles
     do
         unzip $f -d data/.
