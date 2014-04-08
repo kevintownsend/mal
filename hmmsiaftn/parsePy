@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/bin/env python3
 import xml.etree.ElementTree as ET
 from sys import *
 if(len(argv) != 2):

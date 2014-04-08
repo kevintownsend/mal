@@ -71,7 +71,7 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
             assert(checkY.size() != 0);
             for(int j = 0; j < checkY.size(); j++){
                 if(checkY[j] != intermediateY[j]){
-                    cerr << "shit at " << i << "," << j << endl;
+                    cerr << "ERROR: " << endl;
                     cerr << "check: " << checkY[j] << endl;
                     cerr << "intermediateY: " << intermediateY[j] << endl;
                 }
@@ -106,13 +106,25 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         }
         xVector[testJ[i]] = testV[i];
     }
+    high_resolution_clock::time_point before = high_resolution_clock::now();
     for(int j = 0; j < intermediateY.size(); j++){
         intermediateY[j] = 0;
     }
+#ifdef PARALLEL
+    cerr << "before parallel call" << endl;
+    spmvParallel(trainI, trainJ, trainV, intermediateY, xVector);
+    cerr << "after parallel call" << endl;
+#else
     for(int j = 0; j < trainNnz; j++){
         intermediateY[trainI[j]] += trainV[j] * xVector[trainJ[j]];
     }
+#endif
+    high_resolution_clock::time_point after = high_resolution_clock::now();
+    spmvTime += duration_cast<duration<double> >(after-before).count();
+    before = high_resolution_clock::now();
     kSort(&intermediateY[0], intermediateY.size(), &kNNIndices[0], k);
+    after = high_resolution_clock::now();
+    sorting += duration_cast<duration<double> >(after-before).count();
     for(int j = 0; j < k; j++){
         ret[currTestRow].push_back(make_pair(kNNIndices[j],intermediateY[kNNIndices[j]]));
     }
@@ -149,7 +161,7 @@ void kSort(double* begin, int size, int* kNN, int k){
 void spmvParallel (vector<int> &aRows, vector<int> &aColumns, vector<double> &aValues, vector<double> &y, vector<double> &x){
     int threadCount = thread::hardware_concurrency();
     //cerr << "threadCount: " << threadCount << endl;
-    threadCount = 16;
+    threadCount = 28;
     if(threadCount == 0){
         spmv(aRows.begin(), aColumns.begin(), aValues.begin(), y.begin(), x.begin(), 0, aRows.size());
         return;
