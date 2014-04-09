@@ -93,10 +93,18 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         }
         xVectorHardware[testJ[i]] = testV[i];
     }
+    high_resolution_clock::time_point before = high_resolution_clock::now();
     runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
+    high_resolution_clock::time_point after = high_resolution_clock::now();
+    spmvTime += duration_cast<duration<double> >(after-before).count();
+    before = high_resolution_clock::now();
     cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
-
+    after = high_resolution_clock::now();
+    coprocToHost += duration_cast<duration<double> >(after-before).count();
+    before = high_resolution_clock::now();
     kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
+    after = high_resolution_clock::now();
+    sorting += duration_cast<duration<double> >(after-before).count();
     for(int j = 0; j < k; j++){
         ret[currTestRow].push_back(make_pair(kNNIndices[j],hostY[kNNIndices[j]]));
     }
