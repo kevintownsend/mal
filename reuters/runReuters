@@ -1,0 +1,9 @@
+#!/bin/bash
+#TODO: download datasets
+#TODO: parse datasets
+#TODO: create train and test matrix
+#TODO: spMM
+#TODO: rainbow time
+#TODO: naive time
+#TODO: parallel time
+#TODO: convey time
