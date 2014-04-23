@@ -1,5 +1,54 @@
-#!/bin/bash
-#TODO: download datasets
+#!/usr/bin/bash
+test0="lyrl2004_tokens_test_pt0.dat.gz"
+test2="lyrl2004_tokens_test_pt2.dat.gz"
+train="lyrl2004_tokens_train.dat.gz"
+test1="lyrl2004_tokens_test_pt1.dat.gz"
+test3="lyrl2004_tokens_test_pt3.dat.gz"
+if [ ! -f $test0 -a ! -f ${test0%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt0.dat.gz
+fi
+if [ ! -f $test1 -a ! -f ${test1%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt1.dat.gz
+fi
+if [ ! -f $test2 -a ! -f ${test2%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt2.dat.gz
+fi
+if [ ! -f $test3 -a ! -f ${test3%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt3.dat.gz
+fi
+if [ ! -f $train -a ! -f ${test%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_train.dat.gz
+fi
+
+files=( $train $test0 $test1 $test2 $test3 )
+
+echo ${files[*]}
+
+for file in ${files[*]}
+do
+    echo ${file%.gz}
+    if [ ! -f ${file%.gz} ]
+    then
+        gzip -d ${file}
+    fi
+done
+
+if [ ! -e documents ]
+then
+    mkdir documents
+fi
+for file in ${files[*]%.gz}
+do
+    makeDocuments $file
+    echo $file
+    break
+done
+
 #TODO: parse datasets
 #TODO: create train and test matrix
 #TODO: spMM
