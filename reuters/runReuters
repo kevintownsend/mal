@@ -42,11 +42,14 @@ if [ ! -e documents ]
 then
     mkdir documents
 fi
+if [ ! -e documents/a ]
+then
+    mkdir documents/a
+fi
 for file in ${files[*]%.gz}
 do
     makeDocuments $file
     echo $file
-    break
 done
 
 #TODO: parse datasets
