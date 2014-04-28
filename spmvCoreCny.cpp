@@ -14,7 +14,7 @@
 #include <boost/chrono/include.hpp>
 #include <boost/chrono.hpp>
 #include "r3.h"
-
+#define MAX_R3_CHUNK 1000
 using namespace std;
 using namespace boost::chrono;
 
@@ -47,7 +47,8 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     }
     double* xVectorHardware = (double*)cny_cp_malloc(sizeof(double) * trainN);
     int currTestRow = 0;
-    spoonHeader* trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz);
+    int sets;
+    spoonHeader* trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz); //, MAX_R3_CHUNK, &sets);
     currTestRow = 0;
     int firstRowElement = 0;
     for(int i = 0; i < trainN; i++){
@@ -56,21 +57,19 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     vector<int> kNNIndices;
     for(int i = 0; i < k; i++)
         kNNIndices.push_back(-1);
-
     high_resolution_clock::time_point t3 = high_resolution_clock::now();
     high_resolution_clock::time_point timePoint = high_resolution_clock::now();
     for(int i = 0; i < testNnz; i++){
         if(testI[i] != currTestRow){
             hostToCoproc += duration_cast<duration<double> >(timePoint - high_resolution_clock::now()).count();
             high_resolution_clock::time_point before = high_resolution_clock::now();
-            runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
+            runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]); //, sets);
             high_resolution_clock::time_point after = high_resolution_clock::now();
             spmvTime += duration_cast<duration<double> >(after-before).count();
             before = high_resolution_clock::now();
             cny_cp_memcpy(&hostY[0], &hardwareY[0], trainM * sizeof(double));
             after = high_resolution_clock::now();
             coprocToHost += duration_cast<duration<double> >(after-before).count();
-
             before = high_resolution_clock::now();
             kSort(&hostY[0], hostY.size(), &kNNIndices[0], k);
             after = high_resolution_clock::now();
@@ -94,7 +93,7 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         xVectorHardware[testJ[i]] = testV[i];
     }
     high_resolution_clock::time_point before = high_resolution_clock::now();
-    runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]);
+    runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]); //, sets);
     high_resolution_clock::time_point after = high_resolution_clock::now();
     spmvTime += duration_cast<duration<double> >(after-before).count();
     before = high_resolution_clock::now();

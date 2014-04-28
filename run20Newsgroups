@@ -21,6 +21,6 @@ else
 fi
 ls 20news-bydate-train/*/* > trainFilelist
 ls 20news-bydate-test/*/* > testFilelist
-rainbow -d ./model --test-set=testFilelist --test=1 > 20NewsResults
+time rainbow -d ./model --test-set=testFilelist --test=1 > 20NewsResults
 rainbow-stats < 20NewsResults
 rainbow -d ./model --print-matrix > bowMatrix
