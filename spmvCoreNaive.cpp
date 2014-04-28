@@ -133,6 +133,7 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     cerr << "Classification took: " << time_span.count() << " seconds." << endl;
     cerr << "SpMV took: " << spmvTime << " seconds." << endl;
     cerr << "sorting took: " << sorting << " seconds." << endl;
+    //TODO: find seg fault
     return ret;
 }
 

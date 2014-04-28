@@ -1,0 +1,90 @@
+#!/usr/bin/bash
+test0="lyrl2004_tokens_test_pt0.dat.gz"
+test2="lyrl2004_tokens_test_pt2.dat.gz"
+train="lyrl2004_tokens_train.dat.gz"
+test1="lyrl2004_tokens_test_pt1.dat.gz"
+test3="lyrl2004_tokens_test_pt3.dat.gz"
+if [ ! -f $test0 -a ! -f ${test0%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt0.dat.gz
+fi
+if [ ! -f $test1 -a ! -f ${test1%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt1.dat.gz
+fi
+if [ ! -f $test2 -a ! -f ${test2%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt2.dat.gz
+fi
+if [ ! -f $test3 -a ! -f ${test3%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt3.dat.gz
+fi
+if [ ! -f $train -a ! -f ${test%.gz} ]
+then
+    wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_train.dat.gz
+fi
+
+files=( $train $test0 $test1 $test2 $test3 )
+
+for file in ${files[*]}
+do
+    if [ ! -f ${file%.gz} ]
+    then
+        gzip -d ${file}
+    fi
+done
+
+if [ ! -e documents ]
+then
+    mkdir documents
+fi
+if [ ! -e documents/a ]
+then
+    mkdir documents/a
+fi
+if [ ! -e documents/a/10000 ]
+then
+    for file in ${files[*]%.gz}
+    do
+        makeDocuments $file
+    done
+fi
+
+if [ ! -e documents/b ]
+then
+    mkdir documents/b
+    mv documents/a/9999 documents/b/.
+fi
+
+i=0
+echo "step $i"
+let i=i+1
+if [ ! -e model ]
+then
+    rainbow -d ./model --index documents/*
+fi
+echo "step $i"
+let i=i+1
+ls documents/b/* > testFileList
+echo "step $i"
+let i=i+1
+#TODO: remove not needed
+rainbow -d ./model --test-set=testFileList --test=1 > results
+echo "step $i"
+let i=i+1
+rainbow-stats < results
+echo "step $i"
+let i=i+1
+rainbow -d ./model --print-matrix > bowMatrix
+echo "step $i"
+let i=i+1
+time rainbow -d ./model --method=knn --knn-k=30 --knn-weighting=nnn.nnn --test-set=testFileList --test=1
+echo "step $i"
+let i=i+1
+#TODO: create train and test matrix
+#TODO: spMM
+#TODO: rainbow time
+#TODO: naive time
+#TODO: parallel time
+#TODO: convey time
