@@ -1,0 +1,105 @@
+#!/bin/env python3
+from sys import *
+from string import *
+
+prefix="."
+if(len(argv) == 2):
+    prefix = argv[1]
+
+fin = open(prefix + "/bowMatrix")
+i = 0
+trainCount = 0
+trainMatrixSize = 0
+testCount = 0
+testMatrixSize = 0
+train = [[],[],[]]
+test = [[],[],[]]
+classes = {}
+trainClasses = []
+for l in fin:
+    #print("ERROR: " + l);
+    line = l.split()
+    if(line[0].find("document") != -1):
+        if(not line[1] in classes.keys()):
+            classes[line[1]] = len(classes)
+        trainClasses.append(line[1])
+        del line[0]
+        del line[1]
+        for j in range(len(line)//3):
+            train[0].append(trainCount)
+            train[1].append(int(line[1 + j * 3]))
+            train[2].append(int(line[2 + j * 3]))
+            trainMatrixSize = trainMatrixSize + 1
+        trainCount = trainCount + 1
+    elif(line[0].find("test") != -1):
+        del line[0]
+        del line[1]
+        for j in range(len(line)//3):
+            test[0].append(testCount)
+            test[1].append(int(line[1 + j * 3]))
+            test[2].append(int(line[2 + j * 3]))
+            testMatrixSize = testMatrixSize + 1
+        testCount = testCount + 1
+    else:
+        print("ERROR")
+    i = i + 1
+#TODO: write train mtx
+#TODO: write test mtx
+print("WTF: " + prefix + "/model/vocabulary")
+vocabFile = open(prefix + "/model/vocabulary")
+
+vocabFile.readline()
+print("WTF")
+vocabSize = int(vocabFile.readline())
+
+firstPtr = 0
+secondPtr = 0
+currRow = 0
+currTotal = 0
+for i in range(len(train[0])):
+    if(train[0][i] == currRow):
+        currTotal = currTotal + train[2][i]
+    else:
+        #for j in range(firstPtr,i):
+        #    train[2][j] = train[2][j]/currTotal
+        currTotal = train[2][i]
+        currRow = train[0][i]
+        firstPtr = i
+#for i in range(firstPtr, len(train[0])):
+#    train[2][i] = train[2][i]/currTotal
+trainMtx = open("train.mtx","w")
+trainMtx.write("%%MatrixMarket matrix coordinate real general\n")
+trainMtx.write(str(trainCount) + " " + str(vocabSize) + " " +
+str(trainMatrixSize) + "\n")
+for i in range(trainMatrixSize):
+    trainMtx.write(str(train[0][i]) + " " + str(train[1][i]) + " " + str(train[2][i]) + "\n")
+
+firstPtr = 0
+secondPtr = 0
+currRow = 0
+currTotal = 0
+for i in range(len(test[0])):
+    if(test[0][i] == currRow):
+        currTotal = currTotal + test[2][i]
+    else:
+        #for j in range(firstPtr,i):
+        #    test[2][j] = test[2][j]/currTotal
+        currTotal = test[2][i]
+        currRow = test[0][i]
+        firstPtr = i
+#for i in range(firstPtr, len(test[0])):
+#    test[2][i] = test[2][i]/currTotal
+testMtx = open("test.mtx","w")
+testMtx.write("%%MatrixMarket matrix coordinate real general\n")
+testMtx.write(str(testCount) + " " + str(vocabSize) + " " +
+str(testMatrixSize) + "\n")
+for i in range(testMatrixSize):
+    testMtx.write(str(test[0][i]) + " " + str(test[1][i]) + " " + str(test[2][i]) + "\n")
+
+#TODO: cls file
+print(classes)
+trainCls = open("train.cls","w")
+trainCls.write(str(len(classes)) + " " + str(trainCount) + "\n")
+for i in range(len(trainClasses)):
+    trainCls.write(str(classes[trainClasses[i]]) + " " + str(trainClasses[i])
+    + "\n")

@@ -27,11 +27,8 @@ fi
 
 files=( $train $test0 $test1 $test2 $test3 )
 
-echo ${files[*]}
-
 for file in ${files[*]}
 do
-    echo ${file%.gz}
     if [ ! -f ${file%.gz} ]
     then
         gzip -d ${file}
@@ -46,13 +43,45 @@ if [ ! -e documents/a ]
 then
     mkdir documents/a
 fi
-for file in ${files[*]%.gz}
-do
-    makeDocuments $file
-    echo $file
-done
+if [ ! -e documents/a/10000 ]
+then
+    for file in ${files[*]%.gz}
+    do
+        makeDocuments $file
+    done
+fi
 
-#TODO: parse datasets
+if [ ! -e documents/b ]
+then
+    mkdir documents/b
+    mv documents/a/9999 documents/b/.
+fi
+
+i=0
+echo "step $i"
+let i=i+1
+if [ ! -e model ]
+then
+    rainbow -d ./model --index documents/*
+fi
+echo "step $i"
+let i=i+1
+ls documents/b/* > testFileList
+echo "step $i"
+let i=i+1
+#TODO: remove not needed
+rainbow -d ./model --test-set=testFileList --test=1 > results
+echo "step $i"
+let i=i+1
+rainbow-stats < results
+echo "step $i"
+let i=i+1
+rainbow -d ./model --print-matrix > bowMatrix
+echo "step $i"
+let i=i+1
+time rainbow -d ./model --method=knn --knn-k=30 --knn-weighting=nnn.nnn --test-set=testFileList --test=1
+echo "step $i"
+let i=i+1
 #TODO: create train and test matrix
 #TODO: spMM
 #TODO: rainbow time
