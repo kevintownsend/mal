@@ -20,7 +20,7 @@ if [ ! -f $test3 -a ! -f ${test3%.gz} ]
 then
     wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_test_pt3.dat.gz
 fi
-if [ ! -f $train -a ! -f ${test%.gz} ]
+if [ ! -f $train -a ! -f ${train%.gz} ]
 then
     wget http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a12-token-files/lyrl2004_tokens_train.dat.gz
 fi
