@@ -1,7 +1,7 @@
 all : makeDocuments
 
 makeDocuments : makeDocuments.cpp
-	g++ -std=c++11 -o makeDocuments makeDocuments.cpp
+	g++ -std=c++0x -o makeDocuments makeDocuments.cpp
 
 one : makeDocuments
 	runReuters

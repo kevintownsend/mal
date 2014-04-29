@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 test0="lyrl2004_tokens_test_pt0.dat.gz"
 test2="lyrl2004_tokens_test_pt2.dat.gz"
 train="lyrl2004_tokens_train.dat.gz"
