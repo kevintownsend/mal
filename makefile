@@ -50,7 +50,7 @@ spmvCoreParallel.o : spmvCoreNaive.cpp spmvCore.h
 	g++ -std=gnu++0x -DPARALLEL -O3 -o spmvCoreParallel.o -c spmvCoreNaive.cpp
 
 malParallel : spmvCoreParallel.o mal.cpp
-	g++ -std=gnu++0x -pthread -o malParallel mal.cpp spmvCoreParallel.o
+	g++ -std=gnu++0x -pthread -O3 -o malParallel mal.cpp spmvCoreParallel.o
 
 spmvCoreMkl.o : spmvCoreMkl.cpp spmvCore.h
 	icpc -std=gnu++0x -mkl=parallel -O3 -c spmvCoreMkl.cpp

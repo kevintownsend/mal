@@ -36,3 +36,6 @@ queryCny : query.cpp ../spmvCoreCny.o
 runQueryCny :
 	scp linux-5.ece.iastate.edu:~/kNN/mal/reuters/queryCny .
 	queryCny
+
+clean :
+	rm -rf queryCny

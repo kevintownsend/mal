@@ -17,7 +17,7 @@ test = [[],[],[]]
 classes = {}
 trainClasses = []
 for l in fin:
-    print("ERROR: " + l)
+    #print("ERROR: " + l)
     line = l.split()
 
     if(line[0].find("train") != -1 or True):
@@ -98,7 +98,6 @@ for i in range(testMatrixSize):
     testMtx.write(str(test[0][i] + 1) + " " + str(test[1][i] + 1) + " " + str(test[2][i]) + "\n")
 
 #TODO: cls file
-print(classes)
 trainCls = open("train.cls","w")
 trainCls.write(str(len(classes)) + " " + str(trainCount) + "\n")
 for i in range(len(trainClasses)):

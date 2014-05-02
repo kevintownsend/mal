@@ -162,7 +162,7 @@ void kSort(double* begin, int size, int* kNN, int k){
 void spmvParallel (vector<int> &aRows, vector<int> &aColumns, vector<double> &aValues, vector<double> &y, vector<double> &x){
     int threadCount = thread::hardware_concurrency();
     //cerr << "threadCount: " << threadCount << endl;
-    threadCount = 28;
+    threadCount = 8;
     if(threadCount == 0){
         spmv(aRows.begin(), aColumns.begin(), aValues.begin(), y.begin(), x.begin(), 0, aRows.size());
         return;

@@ -72,34 +72,5 @@ trainMtx.write("%%MatrixMarket matrix coordinate real general\n")
 trainMtx.write(str(trainCount) + " " + str(vocabSize) + " " +
 str(trainMatrixSize) + "\n")
 for i in range(trainMatrixSize):
-    trainMtx.write(str(train[0][i]) + " " + str(train[1][i]) + " " + str(train[2][i]) + "\n")
-
-firstPtr = 0
-secondPtr = 0
-currRow = 0
-currTotal = 0
-for i in range(len(test[0])):
-    if(test[0][i] == currRow):
-        currTotal = currTotal + test[2][i]
-    else:
-        #for j in range(firstPtr,i):
-        #    test[2][j] = test[2][j]/currTotal
-        currTotal = test[2][i]
-        currRow = test[0][i]
-        firstPtr = i
-#for i in range(firstPtr, len(test[0])):
-#    test[2][i] = test[2][i]/currTotal
-testMtx = open("test.mtx","w")
-testMtx.write("%%MatrixMarket matrix coordinate real general\n")
-testMtx.write(str(testCount) + " " + str(vocabSize) + " " +
-str(testMatrixSize) + "\n")
-for i in range(testMatrixSize):
-    testMtx.write(str(test[0][i]) + " " + str(test[1][i]) + " " + str(test[2][i]) + "\n")
-
-#TODO: cls file
-print(classes)
-trainCls = open("train.cls","w")
-trainCls.write(str(len(classes)) + " " + str(trainCount) + "\n")
-for i in range(len(trainClasses)):
-    trainCls.write(str(classes[trainClasses[i]]) + " " + str(trainClasses[i])
-    + "\n")
+    trainMtx.write(str(train[0][i] + 1) + " " + str(train[1][i]+1) + " " + str(train[2][i]) + "\n")
+trainMtx.close()

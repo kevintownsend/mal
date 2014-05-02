@@ -36,32 +36,20 @@ int main(int argc, char* argv[]){
     trainMtxFile.close();
     cerr << "Hello World" << endl;
     //TODO: read query matrix
-    ifstream queryBowFile("bowQueryMatrix");
-    getline(queryBowFile, line);
-    getline(queryBowFile, line);
-    getline(queryBowFile, line);
-    vector<double> queryBow;
-    queryBow.resize(N);
-    stringstream lStream2;
-    lStream2 << line;
-    string tmpS;
-    lStream2 >> tmpS;
-    lStream2 >> tmpS;
     int tmp1;
     double tmp2;
     vector<int> testRows;
     vector<int> testColumns;
     vector<double> testValues;
-    while(!lStream2.eof()){
-        lStream2 >> tmpS >> tmp1 >> tmp2;
-        queryBow[tmp1] = tmp2;
+    for(int i = 0; i < N; i++){
         testRows.push_back(0);
-        testColumns.push_back(tmp1);
-        testValues.push_back(tmp2);
+        testColumns.push_back(i);
+        testValues.push_back(1);
     }
     //TODO: read money
     //TODO: service
     //TODO: find segfault
+    
     vector< vector< pair<int, double> > > results = findNearestNeihbors(M, N, nnz, rows, columns, values, 1, N, testValues.size(), testRows, testColumns, testValues);
     cerr << "leaving main" << endl;
 }

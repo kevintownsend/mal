@@ -48,7 +48,9 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     double* xVectorHardware = (double*)cny_cp_malloc(sizeof(double) * trainN);
     int currTestRow = 0;
     int sets;
+    cerr << "before preprocess" << endl;
     spoonHeader* trainSpoon = cnySpoonFmt(&trainI[0], &trainJ[0], &trainV[0], trainM, trainN, trainNnz); //, MAX_R3_CHUNK, &sets);
+    cerr << "after preprocess" << endl;
     currTestRow = 0;
     int firstRowElement = 0;
     for(int i = 0; i < trainN; i++){
@@ -93,7 +95,9 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         xVectorHardware[testJ[i]] = testV[i];
     }
     high_resolution_clock::time_point before = high_resolution_clock::now();
+    cerr << "before R3" << endl;
     runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]); //, sets);
+    cerr << "after R3" << endl;
     high_resolution_clock::time_point after = high_resolution_clock::now();
     spmvTime += duration_cast<duration<double> >(after-before).count();
     before = high_resolution_clock::now();
