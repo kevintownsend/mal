@@ -55,6 +55,7 @@ else
     rm -rf money
 #todo fix break
     year=76
+    y=76
     while [ $year -ne 15 ]
     do
         xmlFiles=$(ls data/${year}*)
@@ -73,11 +74,12 @@ else
             parsePy $f > bowFiles/${newF:0:3}/$newF
         done
         eval i=$i+1
-        let year=year+1
-        year=`printf %02d $year`
+        let y=y+1
+        year=`printf %02d $y`
         if [ $year -eq 100 ]
         then
             year=00
+            y=0
         fi
     done
 fi
