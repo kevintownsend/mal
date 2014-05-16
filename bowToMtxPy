@@ -94,7 +94,7 @@ testMtx.write("%%MatrixMarket matrix coordinate real general\n")
 testMtx.write(str(testCount) + " " + str(vocabSize) + " " +
 str(testMatrixSize) + "\n")
 for i in range(testMatrixSize):
-    testMtx.write(str(test[0][i]) + " " + str(test[1][i]) + " " + str(test[2][i]) + "\n")
+    testMtx.write(str(test[0][i] + 1) + " " + str(test[1][i] + 1) + " " + str(test[2][i]) + "\n")
 
 #TODO: cls file
 print(classes)
