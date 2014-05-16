@@ -1,9 +1,6 @@
-all : makeDocuments
+all :
 
-makeDocuments : makeDocuments.cpp
-	g++ -std=c++0x -o makeDocuments makeDocuments.cpp
-
-one : makeDocuments
+one :
 	getData
 
 rainbowQuery :
