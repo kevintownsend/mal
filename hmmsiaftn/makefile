@@ -34,7 +34,7 @@ queryCny : query.cpp ../spmvCoreCny.o
 	cnyCC -O3 -lrt -I../. -L${HOME}/lib -lboost_chrono -lboost_system -o queryCny query.cpp ${HOME}/misc/r3.o ${HOME}/misc/packetEncoder.o ${HOME}/misc/mmio.o ${HOME}/misc/cpSMVM.s ../spmvCoreCny.o
 
 runQueryCny :
-	scp linux-5.ece.iastate.edu:~/kNN/mal/hmmsiafn/queryCny .
+	scp linux-5.ece.iastate.edu:~/kNN/mal/hmmsiaftn/queryCny .
 	queryCny
 
 clean :
