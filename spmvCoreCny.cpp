@@ -94,7 +94,9 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
         }
         xVectorHardware[testJ[i]] = testV[i];
     }
+    vector<double> times;
     high_resolution_clock::time_point before = high_resolution_clock::now();
+    times.push_back(duration_cast<duration<double> >(t3-before).count();
     cerr << "before R3" << endl;
     runR3(trainSpoon,&xVectorHardware[0], &hardwareY[0]); //, sets);
     cerr << "after R3" << endl;
@@ -119,6 +121,8 @@ vector<vector<pair<int, double> > > findNearestNeihbors(int trainM, int trainN, 
     cerr << "sorting took: " << sorting << " seconds." << endl;
     cerr << "coprocToHost took: " << coprocToHost << " seconds." << endl;
     cerr << "hostToCoproc took: " << hostToCoproc << " seconds." << endl;
+    cerr << "between times:" << endl;
+    cerr << "first: " << times[0] << endl;
     return ret;
 }
 

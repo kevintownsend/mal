@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 import sys
-#TODO: scale to 2*median
+#TODO: real option
+width = 1000
+if len(sys.argv) == 2:
+    width=10000
 input()
 #M, N, nnz = all(
 M, N, nnz= (int(i) for i in input().split())
-width = 1000
-height = int(M/(N/1000.0))
-scale = N/1000.0
+height = int(M/(N/width))
+scale = N/width
 freqImage = [[0 for i in range(width+1)] for j in range(height+1)]
 for i in range(nnz):
     y, x, v = (int(j)-1 for j in input().split())
