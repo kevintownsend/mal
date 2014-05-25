@@ -38,11 +38,17 @@ then
         fi
         newF=${f%.xml}
         newF=${newF#dataShort}
-        if [ ! -d bowFilesShort/${newF:0:3} ]
-        then
-            mkdir bowFilesShort/${newF:0:3}
+        if [ ${newF:1:2} -le 50 ]; then
+            yearFull=20${newF:1:2}
+        else
+            yearFull=19${newF:1:2}
         fi
-        parsePy $f > bowFilesShort/${newF:0:3}/$newF
+        if [ ! -d bowFilesShort/${yearFull} ]
+        then
+            echo "test: ${newF:1:2}"
+            mkdir bowFilesShort/${yearFull}
+        fi
+        parsePy $f > bowFilesShort/${yearFull}/$newF
         eval i=$i+1
     done
     mv money moneyShort
@@ -67,11 +73,16 @@ else
 #        fi
             newF=${f%.xml}
             newF=${newF#data}
-            if [ ! -d bowFiles/${newF:0:3} ]
-            then
-                mkdir bowFiles/${newF:0:3}
+            if [ ${newF:1:2} -le 50 ]; then
+                yearFull=20${newF:1:2}
+            else
+                yearFull=19${newF:1:2}
             fi
-            parsePy $f > bowFiles/${newF:0:3}/$newF
+            if [ ! -d bowFiles/${yearFull} ]
+            then
+                mkdir bowFiles/${yearFull}
+            fi
+            parsePy $f > bowFiles/${yearFull}/$newF
         done
         eval i=$i+1
         let y=y+1

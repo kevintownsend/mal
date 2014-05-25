@@ -4,7 +4,7 @@ one :
 	getData
 
 rainbowQuery :
-	time rainbow -d ./model --method=knn --knn-k=30 --knn-weighting=nnn.nnn --query=bowFiles/00/0000000
+	time rainbow -d ./model --method=knn --knn-k=30 --knn-weighting=nnn.nnn --query=bowFiles/2000/0000000
 
 two : train.mtx query
 	query
