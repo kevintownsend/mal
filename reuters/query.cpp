@@ -41,7 +41,7 @@ int main(int argc, char* argv[]){
     vector<int> testRows;
     vector<int> testColumns;
     vector<double> testValues;
-    for(int i = 0; i < N; i++){
+    for(int i = 0; i < 100; i++){
         testRows.push_back(0);
         testColumns.push_back(i);
         testValues.push_back(1);
@@ -52,8 +52,5 @@ int main(int argc, char* argv[]){
     
     vector< vector< pair<int, double> > > results = findNearestNeihbors(M, N, nnz, rows, columns, values, 1, N, testValues.size(), testRows, testColumns, testValues);
     cerr << "leaving main" << endl;
-    cerr << "Test vector: " << endl;
-    for(int i = 0; i < testValues.size();i++){
-        cerr << testRows[i] << " " << testColumns[i] << " " << testValues[i] << endl;
-    }
+    cerr << "Test vectorsize: " << testValues.size() << endl;
 }
