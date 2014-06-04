@@ -25,7 +25,7 @@ for i in range(height):
 
 freqs.sort()
 maxEl=min(freqs[len(freqs)*4//5],maxEl)
-sys.stderr.write("hello world")
+sys.stderr.write("black density: " + str(maxEl/(scale*scale)))
 
 print("P2")
 print(str(width) + " "+str(height))
